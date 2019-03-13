@@ -21,6 +21,7 @@ def login_required(f):
             return redirect(url_for('login'))
     return wrap
 
+
 @app.route('/')
 @login_required
 def home():
