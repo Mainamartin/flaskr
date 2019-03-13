@@ -6,13 +6,8 @@ import sqlite3
 app = Flask(__name__)
 
 import os
-#app.config.from_object(os.environ['APP_SETTINGS'])
 app.config.from_object('config.DevelopmentConfig')
-#app.secret_key = 'm0Lzixs3m0qy'
-#app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///posts.db'
-#database = "posts.db"
 
-#create the sqlalchemy object()
 db = SQLAlchemy(app)
 
 from models import *
@@ -31,23 +26,6 @@ def login_required(f):
 def home():
     posts = db.session.query(Blog).all()
     return render_template('index.html', posts=posts)
-'''
-    try:
-        g.db = connect_db()
-        cur = g.db.execute('select * from posts')
-        
-        for row in cur.fetchall():
-            posts.append(dict(no=row[0], title=row[1], description=row[2] ))
-
-        # print(posts)
-        #posts =[ dict(title=row[0], description=row[1]) for row in cur.fetchall()]
-    
-        g.db.close()
-    except sqlite3.OperationalError:
-        flash("You have no database")
-
-    return render_template('index.html', posts=posts)
-'''
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -69,8 +47,6 @@ def logout():
     return render_template('logout.html')
 
 
-#def connect_db():
- #xxx   return sqlite3.connect(database)
 
 if __name__ =='__main__':
     app.run(debug=True)
